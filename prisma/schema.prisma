@@ -1,0 +1,106 @@
+// prisma/schema.prisma
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          String   @id @default(cuid())
+  email       String   @unique
+  name        String?
+  role        Role     @default(VIEWER)
+  avatar      String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  contacts    Contact[]
+  messages    Message[]
+  notes       Note[]
+  analytics   Analytics[]
+}
+
+model Contact {
+  id           String  @id @default(cuid())
+  phone        String  @unique
+  name         String?
+  email        String?
+  whatsappId   String?
+  channel      Channel
+  lastMessage  DateTime?
+  unreadCount  Int      @default(0)
+  notes        Note[]
+  messages     Message[]
+  userId       String
+  user         User     @relation(fields: [userId], references: [id])
+  createdAt    DateTime @default(now())
+}
+
+model Message {
+  id           String   @id @default(cuid())
+  body         String
+  mediaUrl     String?
+  direction    Direction
+  status       MessageStatus @default(PENDING)
+  channel      Channel
+  contactId    String
+  contact      Contact  @relation(fields: [contactId], references: [id])
+  userId       String
+  user         User     @relation(fields: [userId], references: [id])
+  scheduledAt  DateTime?
+  sentAt       DateTime?
+  deliveredAt  DateTime?
+  readAt       DateTime?
+  createdAt    DateTime @default(now())
+}
+
+model Note {
+  id         String @id @default(cuid())
+  content    String
+  isPrivate  Boolean @default(false)
+  contactId  String
+  contact    Contact @relation(fields: [contactId], references: [id])
+  authorId   String
+  author     User    @relation(fields: [authorId], references: [id])
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model Analytics {
+  id           String   @id @default(cuid())
+  channel      Channel
+  sent         Int
+  delivered    Int
+  read         Int
+  responded    Int
+  date         DateTime
+  userId       String
+  user         User     @relation(fields: [userId], references: [id])
+}
+
+enum Role {
+  VIEWER
+  EDITOR
+  ADMIN
+}
+
+enum Channel {
+  SMS
+  WHATSAPP
+}
+
+enum Direction {
+  INBOUND
+  OUTBOUND
+}
+
+enum MessageStatus {
+  PENDING
+  SENT
+  DELIVERED
+  READ
+  FAILED
+}
