@@ -24,7 +24,7 @@ A production-grade, full-stack unified communication platform leveraging Next.js
 
 ### Prerequisites
 
-- Node.js 18+
+- Next.js 14+
 - PostgreSQL (local, Docker, or Supabase)
 - Twilio account ([Free Trial](https://twilio.com/try-twilio))
 
