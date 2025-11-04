@@ -1,6 +1,5 @@
 # Unified Inbox for Multi-Channel Customer Outreach
 
-![Unified Inbox Demo](https://via.placeholder.com/1200x600/4285F4/FFFFFF?text=Unified+Inbox+Demo)  
 A full-stack unified communication platform built with Next.js, Prisma, and Twilio for SMS & WhatsApp messaging.
 
 ## 🎯 Overview
