@@ -1,4 +1,4 @@
-# UnifiedBox: Professional Unified Inbox for Multi-Channel Customer Outreach
+# UnifiedBox: A Multi-Channel Customer Outreach
 
 A production-grade, full-stack unified communication platform leveraging Next.js, Prisma, and Twilio for SMS and WhatsApp messaging.
 
